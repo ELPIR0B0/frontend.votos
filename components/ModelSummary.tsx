@@ -33,28 +33,26 @@ export default function ModelSummary({ info, loading, error }: Props) {
         <div className="grid" style={{ gap: "10px" }}>
           <div className="grid two">
             <div className="panel">
-              <p style={{ margin: 0, color: "#3c3c3c" }}>Modelo</p>
+              <p style={{ margin: 0, color: "#3c3c3c" }}>¿Qué es?</p>
               <strong>{info.model_type}</strong>
-              <p style={{ margin: "4px 0 0" }}>K = {info.k_value}</p>
-              <p style={{ margin: "0" }}>Métrica: {info.metric}</p>
+              <p style={{ margin: "4px 0 0" }}>Usa K vecinos para comparar tu perfil con encuestados parecidos.</p>
+              <p style={{ margin: "4px 0 0" }}>K elegido: {info.k_value}</p>
+              <p style={{ margin: "0" }}>Distancia: {info.metric}</p>
               <p style={{ margin: "0" }}>Peso de vecinos: {info.weights}</p>
             </div>
             <div className="panel">
-              <p style={{ margin: 0, color: "#3c3c3c" }}>Métricas</p>
-              <p style={{ margin: "4px 0 0" }}>Val acc: {formatNum(info.val_accuracy)}</p>
-              <p style={{ margin: "0" }}>Test acc: {formatNum(info.test_accuracy)}</p>
-              <p style={{ margin: "0" }}>Datos de entrenamiento: {info.train_size ?? "-"}</p>
+              <p style={{ margin: 0, color: "#3c3c3c" }}>Resultados</p>
+              <p style={{ margin: "4px 0 0" }}>Precisión en validación: {formatNum(info.val_accuracy)}</p>
+              <p style={{ margin: "0" }}>Precisión en prueba: {formatNum(info.test_accuracy)}</p>
+              <p style={{ margin: "0" }}>Datos usados: {info.train_size ?? "-"}</p>
             </div>
-          </div>
-          <div className="alert">
-            Modelo educativo. Sensible a cambios en los datos; reentrena con el CSV actualizado antes de usarlo en campaña.
           </div>
           <div>
             <p style={{ margin: 0, fontWeight: 700 }}>Clases (resumen):</p>
             <p style={{ margin: "4px 0 0" }}>{classesPreview(info.classes)}</p>
           </div>
           <p style={{ margin: 0, color: "#555" }}>
-            ¿Cómo funciona? Limpia datos faltantes, convierte texto a números, normaliza escalas y usa KNN para decidir a qué grupo se parece más cada persona.
+            ¿Por qué ese K? Se probaron varios valores y se eligió el que mantuvo buena precisión sin volverse inestable. El pipeline limpia datos faltantes, convierte texto a números, normaliza escalas y con KNN decide a qué grupo se parece más cada persona.
           </p>
         </div>
       )}
