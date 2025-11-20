@@ -66,10 +66,7 @@ export default function Home() {
         <h1 style={{ margin: 0, fontSize: "1.9rem", color: "#243532" }}>
           Predicción de intención de voto
         </h1>
-        <p style={{ margin: 0, color: "#31403e" }}>
-          Ingresa un perfil, obtén la predicción y revisa cómo se entrenó el modelo.
-          Presentado por Leny Lopez · Machine Learning 802.
-        </p>
+        <p style={{ margin: 0, color: "#31403e" }}>Presentado por Leny Lopez · Machine Learning 802.</p>
       </header>
 
       <nav style={{ display: "flex", gap: 10, marginBottom: 12 }}>

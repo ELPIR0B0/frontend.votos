@@ -97,15 +97,95 @@ export default function VoterForm({ onSubmit, loading }: Props) {
   return (
     <form className="panel grid" onSubmit={handleSubmit}>
       <div className="badge">Datos del votante</div>
-      <p style={{ margin: 0, color: "#3b4b49" }}>
-        Consejo: usa el botón “Ejemplo rápido” para precargar valores realistas y solo ajusta lo que necesites.
-      </p>
       <div className="grid two" style={{ gap: "10px" }}>
         <button type="button" className="btn-secondary" onClick={() => setForm(defaultPayload)} disabled={loading}>
-          Ejemplo rápido
+          Ejemplo 1 (urbano)
         </button>
-        <button type="button" className="btn-secondary" onClick={handleReset} disabled={loading}>
-          Reiniciar a ejemplo
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() =>
+            setForm({
+              age: 52,
+              gender: "M",
+              education: "Secundaria",
+              employment_status: "Empleado",
+              employment_sector: "Publico",
+              income_bracket: "Medio",
+              marital_status: "Casado",
+              household_size: 4,
+              has_children: "Yes",
+              urbanicity: "Suburbana",
+              region: "Norte",
+              voted_last: "Yes",
+              party_id_strength: 4,
+              union_member: "No",
+              public_sector: "Yes",
+              home_owner: "Yes",
+              small_biz_owner: "No",
+              owns_car: "Yes",
+              wa_groups: "Vecinal",
+              refused_count: 0,
+              attention_check: 1,
+              will_turnout: 0.7,
+              undecided: 0.25,
+              preference_strength: 6,
+              survey_confidence: 0.65,
+              tv_news_hours: 8,
+              social_media_hours: 1,
+              trust_media: 0.45,
+              civic_participation: 2,
+              job_tenure_years: 7,
+              primary_choice: "C1",
+              secondary_choice: "C3",
+            })
+          }
+          disabled={loading}
+        >
+          Ejemplo 2 (suburbano)
+        </button>
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() =>
+            setForm({
+              age: 27,
+              gender: "F",
+              education: "Universitaria",
+              employment_status: "Estudiante",
+              employment_sector: "Ninguno",
+              income_bracket: "Bajo",
+              marital_status: "Soltero",
+              household_size: 2,
+              has_children: "No",
+              urbanicity: "Urbana",
+              region: "Centro",
+              voted_last: "No",
+              party_id_strength: 3,
+              union_member: "No",
+              public_sector: "No",
+              home_owner: "No",
+              small_biz_owner: "No",
+              owns_car: "No",
+              wa_groups: "Comunidad",
+              refused_count: 1,
+              attention_check: 1,
+              will_turnout: 0.55,
+              undecided: 0.4,
+              preference_strength: 4,
+              survey_confidence: 0.5,
+              tv_news_hours: 3,
+              social_media_hours: 4,
+              trust_media: 0.35,
+              civic_participation: 1,
+              job_tenure_years: 1,
+              primary_choice: "C4",
+              secondary_choice: "C2",
+            })
+          }
+          disabled={loading}
+        >
+          Ejemplo 3 (joven)
         </button>
       </div>
 

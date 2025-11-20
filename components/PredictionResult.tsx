@@ -58,7 +58,7 @@ export default function PredictionResult({ data, loading, error }: Props) {
 
           {data.nearest_neighbors_info && (
             <div className="alert">
-              <strong>¿Cómo se calcula?</strong> Se toman los perfiles más parecidos del histórico (vecinos KNN) y se combinan sus preferencias, dando más peso a los más cercanos. Así se obtiene la intención de voto estimada sin necesidad de fórmulas complicadas.
+              <strong>¿Cómo se calcula?</strong> Se toman los perfiles más parecidos del histórico (vecinos KNN) y se combinan sus preferencias, dando más peso a los más cercanos.
             </div>
           )}
         </div>
