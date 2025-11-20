@@ -10,22 +10,6 @@ const sampleCurve: Point[] = [
   { k: 11, accuracy: 0.79 },
 ];
 
-const sampleClassBalance = [
-  { label: "CAND_A", pct: 18 },
-  { label: "CAND_B", pct: 15 },
-  { label: "CAND_C", pct: 14 },
-  { label: "CAND_D", pct: 12 },
-  { label: "Otros", pct: 41 },
-];
-
-const sampleTrend = [
-  { step: 1, acc: 0.68 },
-  { step: 2, acc: 0.73 },
-  { step: 3, acc: 0.79 },
-  { step: 4, acc: 0.81 },
-  { step: 5, acc: 0.80 },
-];
-
 type Props = {
   info?: ModelInfo;
 };
@@ -81,63 +65,6 @@ export default function TrainingInsights({ info }: Props) {
             <li>Reentrena con datos frescos y balancea clases pequeñas.</li>
             <li>Consulta el notebook para matriz de confusión y métricas reales.</li>
           </ul>
-        </div>
-
-        <div className="panel" style={{ borderColor: "rgba(61,139,125,0.2)" }}>
-          <p style={{ margin: 0, fontWeight: 700 }}>Tendencia de precisión (ejemplo)</p>
-          <svg viewBox="0 0 200 80" style={{ width: "100%", height: "160px" }}>
-            {/* Ejes simples */}
-            <line x1="10" y1="70" x2="190" y2="70" stroke="#ccc" strokeWidth="1" />
-            <line x1="10" y1="10" x2="10" y2="70" stroke="#ccc" strokeWidth="1" />
-            {/* Línea */}
-            <polyline
-              fill="none"
-              stroke="#3D8B7D"
-              strokeWidth="3"
-              points={sampleTrend
-                .map((p) => {
-                  const x = 10 + (p.step - 1) * 45;
-                  const y = 70 - p.acc * 60;
-                  return `${x},${y}`;
-                })
-                .join(" ")}
-            />
-            {/* Puntos */}
-            {sampleTrend.map((p) => {
-              const x = 10 + (p.step - 1) * 45;
-              const y = 70 - p.acc * 60;
-              return <circle key={p.step} cx={x} cy={y} r={3} fill="#8FBC91" />;
-            })}
-          </svg>
-          <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
-            La precisión subió en las primeras iteraciones y luego se estabilizó; ahí se detuvo la búsqueda. Usa el notebook para ver la curva real por época/iteración.
-          </p>
-        </div>
-
-        <div className="panel" style={{ borderColor: "rgba(61,139,125,0.2)" }}>
-          <p style={{ margin: 0, fontWeight: 700 }}>Distribución de clases (ejemplo)</p>
-          <div className="grid two">
-            {sampleClassBalance.map((item) => (
-              <div key={item.label} style={{ display: "grid", gap: 4 }}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <span>{item.label}</span>
-                  <span>{item.pct}%</span>
-                </div>
-                <div style={{ background: "rgba(61,139,125,0.12)", borderRadius: 8, height: 10, overflow: "hidden" }}>
-                  <div
-                    style={{
-                      width: `${item.pct}%`,
-                      height: "100%",
-                      background: "linear-gradient(90deg, #8FBC91, #3D8B7D)",
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
-            Si hay clases con pocos ejemplos, el modelo puede confundirse más; por eso es importante balancear los datos.
-          </p>
         </div>
       </div>
     </div>
