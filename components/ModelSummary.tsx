@@ -53,7 +53,9 @@ export default function ModelSummary({ info, loading, error }: Props) {
             <p style={{ margin: 0, fontWeight: 700 }}>Clases:</p>
             <p style={{ margin: "4px 0 0" }}>{classesPreview(info.classes)}</p>
           </div>
-          {info.notes && <p style={{ margin: 0, color: "#555" }}>{info.notes}</p>}
+          <p style={{ margin: 0, color: "#555" }}>
+            Pipeline: imputación simple + one-hot + escalado + KNN. Reentrenar en Colab con los datos recientes.
+          </p>
         </div>
       )}
     </div>

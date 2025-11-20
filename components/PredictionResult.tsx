@@ -59,11 +59,8 @@ export default function PredictionResult({ data, loading, error }: Props) {
 
           {data.nearest_neighbors_info && (
             <div className="alert">
-              <strong>¿Cómo se calcula?</strong> Comparamos tu perfil con los vecinos más cercanos (KNN).
-              Índices {data.nearest_neighbors_info.indices?.join(", ")} con distancias{" "}
-              {data.nearest_neighbors_info.distances
-                ?.map((d) => (d.toFixed ? d.toFixed(3) : d))
-                .join(", ")}
+              <strong>¿Cómo se calcula?</strong> Comparamos tu perfil con ejemplos parecidos (vecinos KNN) y
+              promediamos sus preferencias. Esto ayuda a entender la predicción sin fórmulas complicadas.
             </div>
           )}
         </div>

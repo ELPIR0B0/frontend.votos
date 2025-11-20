@@ -94,10 +94,8 @@ export default function Home() {
       {activeTab === "prediccion" && (
         <div className="grid" style={{ gap: "16px" }}>
           <VoterForm onSubmit={handlePredict} loading={loading} />
-          <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
           <div className="panel alert">
-            Tip: ajusta solo lo necesario usando el “Ejemplo rápido”. Campos clave: edad, región, empleo, preferencias y participación.
-            El backend imputará faltantes siguiendo el pipeline entrenado.
+            Tip: usa “Ejemplo rápido” y ajusta edad, región, empleo, preferencias y participación. El pipeline completa datos faltantes.
           </div>
         </div>
       )}
@@ -105,7 +103,6 @@ export default function Home() {
       {activeTab === "resultados" && (
         <div className="grid" style={{ gap: "16px" }}>
           <PredictionResult data={prediction} loading={loading} error={error} />
-          <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
         </div>
       )}
 
