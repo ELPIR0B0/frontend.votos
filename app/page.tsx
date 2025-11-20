@@ -67,7 +67,8 @@ export default function Home() {
           Predicción de intención de voto
         </h1>
         <p style={{ margin: 0, color: "#31403e" }}>
-          Ingresa un perfil, obtén la predicción y consulta cómo se entrenó el modelo. Todo en español y con tips sencillos.
+          Ingresa un perfil, obtén la predicción y revisa cómo se entrenó el modelo.
+          Presentado por Leny Lopez · Machine Learning 802.
         </p>
       </header>
 
@@ -108,7 +109,7 @@ export default function Home() {
 
       {activeTab === "aprendizaje" && (
         <div className="grid" style={{ gap: "16px" }}>
-          <TrainingInsights />
+          <TrainingInsights info={modelInfo} />
           <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
         </div>
       )}

@@ -50,11 +50,11 @@ export default function ModelSummary({ info, loading, error }: Props) {
             Modelo educativo. Sensible a cambios en los datos; reentrena con el CSV actualizado antes de usarlo en campaña.
           </div>
           <div>
-            <p style={{ margin: 0, fontWeight: 700 }}>Clases:</p>
+            <p style={{ margin: 0, fontWeight: 700 }}>Clases (resumen):</p>
             <p style={{ margin: "4px 0 0" }}>{classesPreview(info.classes)}</p>
           </div>
           <p style={{ margin: 0, color: "#555" }}>
-            Pipeline: imputación simple + one-hot + escalado + KNN. Reentrenar en Colab con los datos recientes.
+            ¿Cómo funciona? Limpia datos faltantes, convierte texto a números, normaliza escalas y usa KNN para decidir a qué grupo se parece más cada persona.
           </p>
         </div>
       )}

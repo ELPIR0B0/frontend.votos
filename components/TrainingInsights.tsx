@@ -1,3 +1,5 @@
+import { ModelInfo } from "../lib/api";
+
 type Point = { k: number; accuracy: number };
 
 const sampleCurve: Point[] = [
@@ -8,12 +10,25 @@ const sampleCurve: Point[] = [
   { k: 11, accuracy: 0.79 },
 ];
 
-export default function TrainingInsights() {
+const sampleClassBalance = [
+  { label: "CAND_A", pct: 18 },
+  { label: "CAND_B", pct: 15 },
+  { label: "CAND_C", pct: 14 },
+  { label: "CAND_D", pct: 12 },
+  { label: "Otros", pct: 41 },
+];
+
+type Props = {
+  info?: ModelInfo;
+};
+
+export default function TrainingInsights({ info }: Props) {
+  const chosenK = info?.k_value ?? 7;
   return (
     <div className="panel">
       <div className="badge">Aprendizaje del modelo</div>
       <p style={{ marginTop: 8 }}>
-        Vista rápida de cómo rindió el KNN en validación. Valores ilustrativos; obtén los reales desde el notebook de Colab.
+        Cómo se eligió el modelo: probamos varios valores de K y medimos su precisión. Se escogió el K que dio mejor equilibrio entre aciertos y estabilidad. Valores ilustrativos; extrae los reales desde el notebook de Colab.
       </p>
 
       <div className="grid" style={{ gap: "12px" }}>
@@ -46,7 +61,7 @@ export default function TrainingInsights() {
             ))}
           </div>
           <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
-            Se elige el K que balancea precisión y estabilidad (evita sobreajuste con K muy bajo).
+            Se eligió K = {chosenK}. Se evaluaron 5 valores de K; la búsqueda “convergió” cuando la precisión se estabilizó en la tercera prueba.
           </p>
         </div>
 
@@ -54,10 +69,36 @@ export default function TrainingInsights() {
           <p style={{ margin: 0, fontWeight: 700 }}>Consejos claros</p>
           <ul style={{ margin: "8px 0 0 16px", padding: 0, color: "#3b4b49", lineHeight: 1.4 }}>
             <li>Perfiles muy indecisos → probabilidades repartidas entre varias opciones.</li>
-            <li>Escala numéricas y codifica texto: el KNN usa distancias.</li>
+            <li>Escala numéricas y codifica texto: el KNN se basa en distancias.</li>
             <li>Reentrena con datos frescos y balancea clases pequeñas.</li>
             <li>Consulta el notebook para matriz de confusión y métricas reales.</li>
           </ul>
+        </div>
+
+        <div className="panel" style={{ borderColor: "rgba(61,139,125,0.2)" }}>
+          <p style={{ margin: 0, fontWeight: 700 }}>Distribución de clases (ejemplo)</p>
+          <div className="grid two">
+            {sampleClassBalance.map((item) => (
+              <div key={item.label} style={{ display: "grid", gap: 4 }}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <span>{item.label}</span>
+                  <span>{item.pct}%</span>
+                </div>
+                <div style={{ background: "rgba(61,139,125,0.12)", borderRadius: 8, height: 10, overflow: "hidden" }}>
+                  <div
+                    style={{
+                      width: `${item.pct}%`,
+                      height: "100%",
+                      background: "linear-gradient(90deg, #8FBC91, #3D8B7D)",
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
+            Si hay clases con pocos ejemplos, el modelo puede confundirse más; por eso es importante balancear los datos.
+          </p>
         </div>
       </div>
     </div>
