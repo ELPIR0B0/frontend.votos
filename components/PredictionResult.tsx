@@ -44,8 +44,7 @@ export default function PredictionResult({ data, loading, error }: Props) {
             </h2>
             {top3.length > 0 && (
               <p style={{ margin: "6px 0 0", color: "#5a4e12" }}>
-                El modelo cree que este perfil se parece más a votantes de {top3[0].label}.
-                Observa las probabilidades para entender el nivel de confianza.
+                El modelo identifica que este perfil se parece más a votantes de {top3[0].label}. Las barras de probabilidad muestran qué tan clara es la preferencia: si la primera barra está mucho más alta, la predicción es más firme; si están parejas, el caso es ambiguo.
               </p>
             )}
           </div>
@@ -59,8 +58,7 @@ export default function PredictionResult({ data, loading, error }: Props) {
 
           {data.nearest_neighbors_info && (
             <div className="alert">
-              <strong>¿Cómo se calcula?</strong> Comparamos tu perfil con ejemplos parecidos (vecinos KNN) y
-              promediamos sus preferencias. Esto ayuda a entender la predicción sin fórmulas complicadas.
+              <strong>¿Cómo se calcula?</strong> Se toman los perfiles más parecidos del histórico (vecinos KNN) y se combinan sus preferencias, dando más peso a los más cercanos. Así se obtiene la intención de voto estimada sin necesidad de fórmulas complicadas.
             </div>
           )}
         </div>
