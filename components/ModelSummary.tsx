@@ -33,12 +33,16 @@ export default function ModelSummary({ info, loading, error }: Props) {
         <div className="grid" style={{ gap: "10px" }}>
           <div className="grid two">
             <div className="panel">
-              <p style={{ margin: 0, color: "#3c3c3c" }}>¿Qué es?</p>
-              <strong>{info.model_type}</strong>
-              <p style={{ margin: "4px 0 0" }}>Usa K vecinos para comparar tu perfil con encuestados parecidos.</p>
-              <p style={{ margin: "4px 0 0" }}>K elegido: {info.k_value}</p>
-              <p style={{ margin: "0" }}>Distancia: {info.metric}</p>
-              <p style={{ margin: "0" }}>Peso de vecinos: {info.weights}</p>
+              <p style={{ margin: 0, color: "#3c3c3c" }}>¿Qué hace?</p>
+              <p style={{ margin: "4px 0 0" }}>
+                Compara cada perfil nuevo con los {info.k_value} encuestados más parecidos y toma la preferencia que predomina.
+              </p>
+              <p style={{ margin: "4px 0 0" }}>
+                Medimos la cercanía con distancia Minkowski: sumamos las diferencias de cada dato (ya normalizado) para ver qué tan cerca están dos personas.
+              </p>
+              <p style={{ margin: "0" }}>
+                Los vecinos más cercanos pesan más que los lejanos al decidir la etiqueta final.
+              </p>
             </div>
             <div className="panel">
               <p style={{ margin: 0, color: "#3c3c3c" }}>Resultados</p>
@@ -47,12 +51,8 @@ export default function ModelSummary({ info, loading, error }: Props) {
               <p style={{ margin: "0" }}>Datos usados: {info.train_size ?? "-"}</p>
             </div>
           </div>
-          <div>
-            <p style={{ margin: 0, fontWeight: 700 }}>Clases (resumen):</p>
-            <p style={{ margin: "4px 0 0" }}>{classesPreview(info.classes)}</p>
-          </div>
           <p style={{ margin: 0, color: "#555" }}>
-            ¿Por qué ese K? Se probaron varios valores y se eligió el que mantuvo buena precisión sin volverse inestable. El pipeline limpia datos faltantes, convierte texto a números, normaliza escalas y con KNN decide a qué grupo se parece más cada persona.
+            ¿Por qué ese K? Se probaron varios valores y se eligió el que mantuvo buena precisión sin volverse inestable. El pipeline limpia datos faltantes, convierte texto a números, normaliza escalas y usa la cercanía entre perfiles para decidir la intención de voto.
           </p>
         </div>
       )}
