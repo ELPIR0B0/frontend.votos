@@ -13,55 +13,51 @@ export default function TrainingInsights() {
     <div className="panel">
       <div className="badge">Aprendizaje del modelo</div>
       <p style={{ marginTop: 8 }}>
-        Esta sección resume cómo se comportó el KNN durante el entrenamiento.
-        Los datos son ilustrativos; usa el notebook en Colab para regenerar gráficas reales.
+        Vista rápida de cómo rindió el KNN en validación. Valores ilustrativos; obtén los reales desde el notebook de Colab.
       </p>
 
-      <div className="grid two" style={{ alignItems: "center" }}>
+      <div className="grid" style={{ gap: "12px" }}>
         <div className="panel" style={{ borderColor: "rgba(61,139,125,0.2)" }}>
-          <p style={{ margin: 0, fontWeight: 700 }}>Curva de accuracy vs K</p>
-          <div style={{ height: 180, position: "relative", padding: "10px 6px 0" }}>
+          <p style={{ margin: 0, fontWeight: 700 }}>Accuracy por valor de K</p>
+          <div className="grid" style={{ gap: 8 }}>
             {sampleCurve.map((pt) => (
-              <div
-                key={pt.k}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: `${(pt.k - 3) * 18}%`,
-                  width: 20,
-                  height: `${pt.accuracy * 140}px`,
-                  background: "linear-gradient(180deg, #3D8B7D, #8FBC91)",
-                  borderRadius: 6,
-                }}
-                title={`K=${pt.k} | acc=${(pt.accuracy * 100).toFixed(1)}%`}
-              />
+              <div key={pt.k}>
+                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem" }}>
+                  <span>K = {pt.k}</span>
+                  <span>{(pt.accuracy * 100).toFixed(1)}%</span>
+                </div>
+                <div
+                  style={{
+                    background: "rgba(61,139,125,0.12)",
+                    borderRadius: 8,
+                    height: 10,
+                    overflow: "hidden",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: `${Math.max(10, pt.accuracy * 100)}%`,
+                      height: "100%",
+                      background: "linear-gradient(90deg, #3D8B7D, #8FBC91)",
+                    }}
+                  />
+                </div>
+              </div>
             ))}
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: 1,
-                background: "rgba(0,0,0,0.08)",
-              }}
-            />
           </div>
           <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
-            El mejor K se selecciona por equilibrio entre estabilidad y desempeño.
+            Se elige el K que balancea precisión y estabilidad (evita sobreajuste con K muy bajo).
           </p>
         </div>
 
         <div className="panel" style={{ borderColor: "rgba(219, 197, 87, 0.5)" }}>
-          <p style={{ margin: 0, fontWeight: 700 }}>Consejos rápidos</p>
-          <ul style={{ margin: "8px 0 0 16px", padding: 0, color: "#3b4b49" }}>
-            <li>Perfiles con alta indecisión tienden a repartirse entre varias clases.</li>
-            <li>Escalar numéricas y codificar categóricas es clave para KNN.</li>
-            <li>Reentrena con datos frescos y balancea clases minoritarias.</li>
+          <p style={{ margin: 0, fontWeight: 700 }}>Consejos claros</p>
+          <ul style={{ margin: "8px 0 0 16px", padding: 0, color: "#3b4b49", lineHeight: 1.4 }}>
+            <li>Perfiles muy indecisos → probabilidades repartidas entre varias opciones.</li>
+            <li>Escala numéricas y codifica texto: el KNN usa distancias.</li>
+            <li>Reentrena con datos frescos y balancea clases pequeñas.</li>
+            <li>Consulta el notebook para matriz de confusión y métricas reales.</li>
           </ul>
-          <p style={{ margin: "6px 0 0", color: "#5a4e12" }}>
-            Usa el notebook en Colab para ver matriz de confusión y métricas macro.
-          </p>
         </div>
       </div>
     </div>

@@ -8,6 +8,18 @@ type Props = {
   error?: string | null;
 };
 
+function formatNum(value?: number) {
+  if (value === undefined || value === null) return "-";
+  return value.toFixed(2);
+}
+
+function classesPreview(classes: string[]) {
+  if (!classes.length) return "-";
+  if (classes.length <= 6) return classes.join(" · ");
+  const head = classes.slice(0, 6).join(" · ");
+  return `${head} · +${classes.length - 6} más`;
+}
+
 export default function ModelSummary({ info, loading, error }: Props) {
   return (
     <div className="panel">
@@ -21,26 +33,25 @@ export default function ModelSummary({ info, loading, error }: Props) {
         <div className="grid" style={{ gap: "10px" }}>
           <div className="grid two">
             <div className="panel">
-              <p style={{ margin: 0, color: "#3c3c3c" }}>Tipo de modelo</p>
+              <p style={{ margin: 0, color: "#3c3c3c" }}>Modelo</p>
               <strong>{info.model_type}</strong>
               <p style={{ margin: "4px 0 0" }}>K = {info.k_value}</p>
               <p style={{ margin: "0" }}>Métrica: {info.metric}</p>
-              <p style={{ margin: "0" }}>Weights: {info.weights}</p>
+              <p style={{ margin: "0" }}>Peso de vecinos: {info.weights}</p>
             </div>
             <div className="panel">
-              <p style={{ margin: 0, color: "#3c3c3c" }}>Métricas aproximadas</p>
-              <p style={{ margin: "4px 0 0" }}>Val acc: {info.val_accuracy ?? "-"} </p>
-              <p style={{ margin: "0" }}>Test acc: {info.test_accuracy ?? "-"}</p>
-              <p style={{ margin: "0" }}>Tamaño entrenamiento: {info.train_size ?? "-"}</p>
+              <p style={{ margin: 0, color: "#3c3c3c" }}>Métricas</p>
+              <p style={{ margin: "4px 0 0" }}>Val acc: {formatNum(info.val_accuracy)}</p>
+              <p style={{ margin: "0" }}>Test acc: {formatNum(info.test_accuracy)}</p>
+              <p style={{ margin: "0" }}>Datos de entrenamiento: {info.train_size ?? "-"}</p>
             </div>
           </div>
           <div className="alert">
-            <strong>Limitaciones:</strong> modelo educativo y sensible a cambios en los datos.
-            Reentrenar con el CSV actualizado antes de usar en campaña.
+            Modelo educativo. Sensible a cambios en los datos; reentrena con el CSV actualizado antes de usarlo en campaña.
           </div>
           <div>
             <p style={{ margin: 0, fontWeight: 700 }}>Clases:</p>
-            <p style={{ margin: "4px 0 0" }}>{info.classes.join(" · ")}</p>
+            <p style={{ margin: "4px 0 0" }}>{classesPreview(info.classes)}</p>
           </div>
           {info.notes && <p style={{ margin: 0, color: "#555" }}>{info.notes}</p>}
         </div>
