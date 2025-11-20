@@ -1,6 +1,7 @@
 "use client";
 
 import { Prediction, Probability } from "../lib/api";
+import ProbabilityBars from "./ProbabilityBars";
 
 type Props = {
   data?: Prediction;
@@ -18,10 +19,10 @@ export default function PredictionResult({ data, loading, error }: Props) {
 
   return (
     <div className="panel">
-      <div className="badge">Resultado</div>
+      <div className="badge">Resultado y análisis</div>
       {!data && !error && (
         <p style={{ marginTop: 12 }}>
-          Envía un perfil para ver la predicción de intención de voto.
+          Envía un perfil para ver la predicción de intención de voto con explicaciones sencillas.
         </p>
       )}
       {loading && <p>Procesando predicción...</p>}
@@ -41,35 +42,28 @@ export default function PredictionResult({ data, loading, error }: Props) {
             <h2 style={{ margin: "6px 0 0", color: "#5a4e12" }}>
               {data.predicted_vote}
             </h2>
+            {top3.length > 0 && (
+              <p style={{ margin: "6px 0 0", color: "#5a4e12" }}>
+                El modelo cree que este perfil se parece más a votantes de {top3[0].label}.
+                Observa las probabilidades para entender el nivel de confianza.
+              </p>
+            )}
           </div>
 
           {top3.length > 0 && (
             <div>
               <h4 className="section-title">Top 3 probabilidades</h4>
-              <div className="grid two">
-                {top3.map((p) => (
-                  <div
-                    key={p.label}
-                    className="panel"
-                    style={{ borderColor: "rgba(61,139,125,0.2)" }}
-                  >
-                    <strong>{p.label}</strong>
-                    <p style={{ margin: "4px 0 0" }}>
-                      {(p.probability * 100).toFixed(1)}%
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <ProbabilityBars probabilities={top3} />
             </div>
           )}
 
           {data.nearest_neighbors_info && (
             <div className="alert">
-              <strong>Vecinos cercanos:</strong> índices{" "}
-              {data.nearest_neighbors_info.indices?.join(", ")} con distancias{" "}
-              {data.nearest_neighbors_info.distances?.map((d) =>
-                d.toFixed ? d.toFixed(3) : d
-              ).join(", ")}
+              <strong>¿Cómo se calcula?</strong> Comparamos tu perfil con los vecinos más cercanos (KNN).
+              Índices {data.nearest_neighbors_info.indices?.join(", ")} con distancias{" "}
+              {data.nearest_neighbors_info.distances
+                ?.map((d) => (d.toFixed ? d.toFixed(3) : d))
+                .join(", ")}
             </div>
           )}
         </div>

@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import VoterForm from "../components/VoterForm";
 import PredictionResult from "../components/PredictionResult";
 import ModelSummary from "../components/ModelSummary";
+import TrainingInsights from "../components/TrainingInsights";
 import { ModelInfo, Prediction, VoterPayload } from "../lib/api";
 import { fetchModelInfo, predict } from "../lib/api";
+
+type Tab = "prediccion" | "resultados" | "aprendizaje";
 
 export default function Home() {
   const [prediction, setPrediction] = useState<Prediction | undefined>();
@@ -15,6 +18,7 @@ export default function Home() {
   const [modelInfo, setModelInfo] = useState<ModelInfo | undefined>();
   const [infoError, setInfoError] = useState<string | null>(null);
   const [infoLoading, setInfoLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<Tab>("prediccion");
 
   useEffect(() => {
     const loadInfo = async () => {
@@ -37,6 +41,7 @@ export default function Home() {
     try {
       const res = await predict(payload);
       setPrediction(res);
+      setActiveTab("resultados");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -62,21 +67,54 @@ export default function Home() {
           Predicción de intención de voto
         </h1>
         <p style={{ margin: 0, color: "#31403e" }}>
-          Ingresa las características de un votante para estimar su afinidad. El backend FastAPI
-          expone el pipeline KNN entrenado; esta interfaz consulta `/predict` y muestra probabilidades.
+          Ingresa un perfil, obtén la predicción y consulta cómo se entrenó el modelo. Todo en español y con tips sencillos.
         </p>
       </header>
 
-      <div className="grid" style={{ gap: "16px" }}>
-        <VoterForm onSubmit={handlePredict} loading={loading} />
-        <PredictionResult data={prediction} loading={loading} error={error} />
-        <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
-        <div className="panel alert">
-          Tips: completa al menos edad, región, estatus laboral, preferencia primaria/secundaria y
-          los campos de participación. El backend imputará faltantes siguiendo el pipeline del notebook.
-          Configura la variable `NEXT_PUBLIC_API_BASE_URL` para apuntar al deployment del backend.
+      <nav style={{ display: "flex", gap: 10, marginBottom: 12 }}>
+        {[
+          { id: "prediccion", label: "1. Perfil y predicción" },
+          { id: "resultados", label: "2. Resultados e interpretación" },
+          { id: "aprendizaje", label: "3. Entrenamiento y consejos" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id as Tab)}
+            className="btn-secondary"
+            style={{
+              background: activeTab === tab.id ? "var(--viridian)" : "var(--beauty-bush)",
+              color: activeTab === tab.id ? "#fff" : "#2f3a39",
+            }}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </nav>
+
+      {activeTab === "prediccion" && (
+        <div className="grid" style={{ gap: "16px" }}>
+          <VoterForm onSubmit={handlePredict} loading={loading} />
+          <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
+          <div className="panel alert">
+            Tip: ajusta solo lo necesario usando el “Ejemplo rápido”. Campos clave: edad, región, empleo, preferencias y participación.
+            El backend imputará faltantes siguiendo el pipeline entrenado.
+          </div>
         </div>
-      </div>
+      )}
+
+      {activeTab === "resultados" && (
+        <div className="grid" style={{ gap: "16px" }}>
+          <PredictionResult data={prediction} loading={loading} error={error} />
+          <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
+        </div>
+      )}
+
+      {activeTab === "aprendizaje" && (
+        <div className="grid" style={{ gap: "16px" }}>
+          <TrainingInsights />
+          <ModelSummary info={modelInfo} loading={infoLoading} error={infoError} />
+        </div>
+      )}
     </div>
   );
 }

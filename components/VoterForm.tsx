@@ -20,41 +20,43 @@ const yesNo = ["", "Yes", "No"];
 const waGroups = ["", "Ninguno", "Comunidad", "Sindicato", "Vecinal"];
 const choices = ["", "C1", "C2", "C3", "C4"];
 
+const defaultPayload: VoterPayload = {
+  age: 35,
+  gender: "F",
+  education: "Universitaria",
+  employment_status: "Empleado",
+  employment_sector: "Privado",
+  income_bracket: "Medio",
+  marital_status: "Casado",
+  household_size: 3,
+  has_children: "Yes",
+  urbanicity: "Urbana",
+  region: "Centro",
+  voted_last: "Yes",
+  party_id_strength: 6,
+  union_member: "No",
+  public_sector: "No",
+  home_owner: "Yes",
+  small_biz_owner: "No",
+  owns_car: "Yes",
+  wa_groups: "Comunidad",
+  refused_count: 0,
+  attention_check: 1,
+  will_turnout: 0.8,
+  undecided: 0.2,
+  preference_strength: 7,
+  survey_confidence: 0.7,
+  tv_news_hours: 6,
+  social_media_hours: 2.5,
+  trust_media: 0.5,
+  civic_participation: 2,
+  job_tenure_years: 5,
+  primary_choice: "C2",
+  secondary_choice: "C1",
+};
+
 export default function VoterForm({ onSubmit, loading }: Props) {
-  const [form, setForm] = useState<VoterPayload>({
-    age: 30,
-    gender: "",
-    education: "",
-    employment_status: "",
-    employment_sector: "",
-    income_bracket: "",
-    marital_status: "",
-    household_size: 2,
-    has_children: "",
-    urbanicity: "",
-    region: "",
-    voted_last: "",
-    party_id_strength: 5,
-    union_member: "",
-    public_sector: "",
-    home_owner: "",
-    small_biz_owner: "",
-    owns_car: "",
-    wa_groups: "",
-    refused_count: 0,
-    attention_check: 1,
-    will_turnout: 0.7,
-    undecided: 0.3,
-    preference_strength: 5,
-    survey_confidence: 0.6,
-    tv_news_hours: 5,
-    social_media_hours: 3,
-    trust_media: 0.5,
-    civic_participation: 1,
-    job_tenure_years: 3,
-    primary_choice: "",
-    secondary_choice: "",
-  });
+  const [form, setForm] = useState<VoterPayload>(defaultPayload);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -89,48 +91,26 @@ export default function VoterForm({ onSubmit, loading }: Props) {
   };
 
   const handleReset = () => {
-    setForm({
-      age: undefined,
-      gender: "",
-      education: "",
-      employment_status: "",
-      employment_sector: "",
-      income_bracket: "",
-      marital_status: "",
-      household_size: undefined,
-      has_children: "",
-      urbanicity: "",
-      region: "",
-      voted_last: "",
-      party_id_strength: undefined,
-      union_member: "",
-      public_sector: "",
-      home_owner: "",
-      small_biz_owner: "",
-      owns_car: "",
-      wa_groups: "",
-      refused_count: undefined,
-      attention_check: undefined,
-      will_turnout: undefined,
-      undecided: undefined,
-      preference_strength: undefined,
-      survey_confidence: undefined,
-      tv_news_hours: undefined,
-      social_media_hours: undefined,
-      trust_media: undefined,
-      civic_participation: undefined,
-      job_tenure_years: undefined,
-      primary_choice: "",
-      secondary_choice: "",
-    });
+    setForm(defaultPayload);
   };
 
   return (
     <form className="panel grid" onSubmit={handleSubmit}>
       <div className="badge">Datos del votante</div>
+      <p style={{ margin: 0, color: "#3b4b49" }}>
+        Consejo: usa el botón “Ejemplo rápido” para precargar valores realistas y solo ajusta lo que necesites.
+      </p>
+      <div className="grid two" style={{ gap: "10px" }}>
+        <button type="button" className="btn-secondary" onClick={() => setForm(defaultPayload)} disabled={loading}>
+          Ejemplo rápido
+        </button>
+        <button type="button" className="btn-secondary" onClick={handleReset} disabled={loading}>
+          Reiniciar a ejemplo
+        </button>
+      </div>
 
       <section>
-        <h3 className="section-title">Datos demograficos</h3>
+        <h3 className="section-title">Datos demográficos</h3>
         <div className="grid two">
           <label>
             Edad
@@ -145,7 +125,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Genero
+            Género
             <select
               className="input"
               name="gender"
@@ -160,7 +140,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Educacion
+            Educación
             <select
               className="input"
               name="education"
@@ -175,7 +155,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Region
+            Región
             <select
               className="input"
               name="region"
@@ -205,7 +185,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Tamano del hogar
+            Tamaño del hogar
             <input
               className="input"
               type="number"
@@ -235,7 +215,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
       </section>
 
       <section>
-        <h3 className="section-title">Situacion socioeconomica</h3>
+        <h3 className="section-title">Situación socioeconómica</h3>
         <div className="grid two">
           <label>
             Estado laboral
@@ -313,7 +293,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Propietario vehiculo
+            Propietario vehículo
             <select
               className="input"
               name="owns_car"
@@ -328,7 +308,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Dueno de pequeno negocio
+            Dueño de pequeño negocio
             <select
               className="input"
               name="small_biz_owner"
@@ -346,10 +326,10 @@ export default function VoterForm({ onSubmit, loading }: Props) {
       </section>
 
       <section>
-        <h3 className="section-title">Participacion y actitudes</h3>
+        <h3 className="section-title">Participación y actitudes</h3>
         <div className="grid two">
           <label>
-            Voto en la ultima eleccion
+            Votó en la última elección
             <select
               className="input"
               name="voted_last"
@@ -389,7 +369,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Nivel de indecision (0-1)
+            Nivel de indecisión (0-1)
             <input
               className="input"
               type="number"
@@ -427,7 +407,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Rehusados en encuesta
+            Preguntas rehusadas (conteo)
             <input
               className="input"
               type="number"
@@ -439,7 +419,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Chequeo de atencion
+            Chequeo de atención
             <input
               className="input"
               type="number"
@@ -464,7 +444,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Horas redes/dia
+            Horas redes/día
             <input
               className="input"
               type="number"
@@ -490,7 +470,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Participacion civica (0-5)
+            Participación cívica (0-5)
             <input
               className="input"
               type="number"
@@ -502,7 +482,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             />
           </label>
           <label>
-            Antiguedad laboral (anios)
+            Antigüedad laboral (años)
             <input
               className="input"
               type="number"
@@ -530,7 +510,7 @@ export default function VoterForm({ onSubmit, loading }: Props) {
             </select>
           </label>
           <label>
-            Sector publico
+            Sector público
             <select
               className="input"
               name="public_sector"
