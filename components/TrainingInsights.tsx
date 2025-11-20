@@ -16,8 +16,6 @@ type Props = {
 
 export default function TrainingInsights({ info }: Props) {
   const chosenK = info?.k_value ?? 7;
-  const valAcc = info?.val_accuracy ?? 0.78;
-  const testAcc = info?.test_accuracy ?? 0.75;
   return (
     <div className="panel">
       <div className="badge">Aprendizaje del modelo</div>
@@ -67,44 +65,6 @@ export default function TrainingInsights({ info }: Props) {
             <li>Reentrena con datos frescos y balancea clases pequeñas.</li>
             <li>Consulta el notebook para matriz de confusión y métricas reales.</li>
           </ul>
-        </div>
-
-        <div className="panel" style={{ borderColor: "rgba(61,139,125,0.2)" }}>
-          <p style={{ margin: 0, fontWeight: 700 }}>Precisión por conjunto (ejemplo)</p>
-          <div className="grid two" style={{ alignItems: "end", gap: 16 }}>
-            {[
-              { label: "Validación", value: valAcc },
-              { label: "Prueba", value: testAcc },
-            ].map((item) => (
-              <div key={item.label} style={{ textAlign: "center" }}>
-                <div
-                  style={{
-                    height: 140,
-                    display: "flex",
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 40,
-                      height: `${Math.max(10, item.value * 120)}px`,
-                      background: "linear-gradient(180deg, #3D8B7D, #8FBC91)",
-                      borderRadius: 8,
-                    }}
-                    title={`${(item.value * 100).toFixed(1)}%`}
-                  />
-                </div>
-                <div style={{ marginTop: 6, fontWeight: 600 }}>{item.label}</div>
-                <div style={{ fontSize: "0.9rem", color: "#3b4b49" }}>
-                  {(item.value * 100).toFixed(1)}%
-                </div>
-              </div>
-            ))}
-          </div>
-          <p style={{ margin: "8px 0 0", color: "#3b4b49" }}>
-            Sirve para ver que el modelo no solo acierta en validación, sino también en prueba; si ves mucha diferencia, reentrena y ajusta K o el preprocesamiento.
-          </p>
         </div>
       </div>
     </div>
